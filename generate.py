@@ -19,20 +19,20 @@ def get_previous_monday_date(input_date: date) -> date:
     """
     return input_date - timedelta(days=input_date.weekday())
 
-def build_wochen_seite(input_date: date) -> Dict:
+def build_week_page(input_date: date) -> Dict:
     """
     Builds the datastructure for the week page.
     """
     # Create page dictionary
-    seite = {
-        "monat": get_next_sunday_date(input_date).strftime("%B"),
-        "type": "Woche",
-        "tage": [],
+    page = {
+        "month": get_next_sunday_date(input_date).strftime("%B"),
+        "type": "Week",
+        "tag": [],
         }
     # Iterate over all days in the week
     for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 7)):
         # Create a nested dict for each day
-        seite['tage'].append(
+        page['tag'].append(
             {
                 "name": day.strftime("%A"),
                 "table-ID": i % 2 + 1,
@@ -40,31 +40,31 @@ def build_wochen_seite(input_date: date) -> Dict:
             }
         )
     # Append blank "day" for notes to get to an even number on the page
-    seite['tage'].append({"name": "Notizen", "table-ID": 2, "datum": ""})
-    return seite
+    page['tag'].append({"name": "Notes", "table-ID": 2, "datum": ""})
+    return page
 
-def build_monats_ueberblick(input_date: date) -> Dict:
+def build_monthly_overview(input_date: date) -> Dict:
     """
     Builds the datastructure for the month overview.
     It expects the input date to be the first day of the month.
     """
-    wochen = []
+    weeks = []
 
     current_date = get_previous_monday_date(input_date)
     first_of_the_month = date(get_next_sunday_date(input_date).year, get_next_sunday_date(input_date).month, 1)
     real_end_date = get_next_sunday_date(first_of_the_month + relativedelta(months=1))
 
     while current_date <= real_end_date:
-        tage = []
+        tag = []
         for j in range(7):
-            tage.append(current_date.strftime("%d"))
+            tag.append(current_date.strftime("%d"))
             current_date += timedelta(days=1)
-        wochen.append(tage)
+        weeks.append(tag)
 
     return {
-            "monat": get_next_sunday_date(input_date).strftime("%B"),
-            "type": "Uebersicht",
-            "wochen": wochen,
+            "month": get_next_sunday_date(input_date).strftime("%B"),
+            "type": "Overview",
+            "weeks": weeks,
         }
 
 def date_iterator(start_date: date, step: timedelta, num:int) -> Iterable[date]:
@@ -77,7 +77,7 @@ parser = argparse.ArgumentParser(
     description='Renders the html for a printable calendar.', 
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--year', type=int, help='The year of the calendar.', default=datetime.now().year + 1)
-parser.add_argument('--region', type=str, help='The region code for the calendar. Mostly used for formating dates.', default="de_DE")
+parser.add_argument('--region', type=str, help='The region code for the calendar. Mostly used for formating dates.', default="en_GB")
 parser.add_argument('--no-browser', '-nb', action='store_true', help='Don\'t open rendered file in the default browser.')
 parser.add_argument('--output', '-o', type=str, help='Output file of the rendering containing the calendar.', default='renderedhtml.html')
 
@@ -102,19 +102,19 @@ real_end_date = get_next_sunday_date(end_date)
 current_date = get_previous_monday_date(start_date)
 
 # Create all pages of the calendar while iterating through the weeks
-seiten = []
+pages = []
 while current_date <= real_end_date:
-    # Add Monatsübersicht
-    if len(seiten) == 0 or seiten[-1]["monat"] != get_next_sunday_date(current_date).strftime("%B"):
-       seiten.append(build_monats_ueberblick(current_date)) 
-    # Add Wochenseite
-    seiten.append(build_wochen_seite(current_date))  
+    # Add monthly overview
+    if len(pages) == 0 or pages[-1]["month"] != get_next_sunday_date(current_date).strftime("%B"):
+       pages.append(build_monthly_overview(current_date)) 
+    # Add weekly page
+    pages.append(build_week_page(current_date))  
     # Increment to the next week
     current_date += timedelta(weeks=1)
 
-# Render the dict and list struckture via jinja2 and the loaded template
+# Render the dict and list structure via jinja2 and the loaded template
 outstring = tempi.render(
-    seiten = seiten,
+    pages = pages,
     day_names = list(calendar.day_name),
     month_names = list(calendar.month_name)[1:],
     year=args.year)

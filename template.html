@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Kalender</title>
+        <title>Calendar</title>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
     </head>
@@ -15,21 +15,21 @@
             </div>
         </div>
 
-        {% for seite in seiten %}
+        {% for page in pages %}
 
             <div class="main-container">
 
-                <div {% if seite.type == "Uebersicht" %}id="{{seite.monat}}"{% endif %} class="content-container">
+                <div {% if page.type == "Overview" %}id="{{page.month}}"{% endif %} class="content-container">
 
-                    <p class="Titel">{{seite.monat}}</p>
+                    <p class="Title">{{page.month}}</p>
                     
-                    {% if seite.type == "Woche" %}
+                    {% if page.type == "Week" %}
                     <div class="grid-container">
 
-                        <!-- Wochentage Grid -->
+                        <!-- DaysOfTheWeek Grid -->
                         <div class="grid-container grid-item">
 
-                            {% for tag in seite.tage %}
+                            {% for tag in page.tag %}
                             
                                 <div class="grid-item" style="grid-column-start: {{tag['table-ID']}}">
                                     <div class="Tag">
@@ -41,10 +41,10 @@
                                         </div>
                                     </div>
                                     <hr />
-                                    <hr class="Linien" />
-                                    <hr class="Linien" />
-                                    <hr class="Linien" />
-                                    <hr class="Linien" />
+                                    <hr class="Lines" />
+                                    <hr class="Lines" />
+                                    <hr class="Lines" />
+                                    <hr class="Lines" />
                                 </div>
 
                             {% endfor %}
@@ -53,18 +53,18 @@
 
                     </div>
                     {% endif %}
-                    {% if seite.type == "Uebersicht" %}
+                    {% if page.type == "Overview" %}
                     
-                    <table class="Monatstabelle">
-                        <tr class="Wochentage">
+                    <table class="MonthlyTable">
+                        <tr class="DaysOfTheWeek">
                             {% for day in day_names %}
                             <td>{{day}}</td>
                             {% endfor %}
                         </tr>
                       
-                        {% for woche in seite.wochen %}
+                        {% for Week in page.weeks %}
                         <tr>
-                            {% for tag in woche %}
+                            {% for tag in Week %}
                             <td> {{tag}} </td>
                             {% endfor %}
                         </tr>
@@ -74,8 +74,8 @@
 
                     {% endif %}
                 </div>
-                <!-- Monatleiste vertikal -->
-                <div class="Leiste">
+                <!-- Vertical Month Bar -->
+                <div class="Strip">
                     <p></p>
                     <hr />
                     {% for month in month_names %}
