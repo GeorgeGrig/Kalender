@@ -19,7 +19,7 @@ def get_previous_monday_date(input_date: date) -> date:
     """
     return input_date - timedelta(days=input_date.weekday())
 
-def build_week_page(input_date: date) -> Dict:
+def build_week_page_left(input_date: date) -> Dict:
     """
     Builds the datastructure for the week page.
     """
@@ -30,17 +30,48 @@ def build_week_page(input_date: date) -> Dict:
         "tag": [],
         }
     # Iterate over all days in the week
-    for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 7)):
+    for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 3)):
         # Create a nested dict for each day
         page['tag'].append(
             {
                 "name": day.strftime("%A"),
-                "table-ID": i % 2 + 1,
-                "datum": day.strftime("%d.%m."),
+                "table-ID": i + 1,
+                "datum": day.strftime("%d.%m"),
             }
         )
-    # Append blank "day" for notes to get to an even number on the page
-    page['tag'].append({"name": "Notes", "table-ID": 2, "datum": ""})
+    # # Append blank "day" for notes to get to an even number on the page
+    # page['tag'].append({"name": "Notes", "table-ID": 2, "datum": ""})
+    return page
+
+def build_week_page_right(input_date: date) -> Dict:
+    """
+    Builds the datastructure for the week page.
+    """
+    # Create page dictionary
+    page = {
+        "month": get_next_sunday_date(input_date).strftime("%B"),
+        "type": "Week",
+        "tag": [],
+        }
+    # Iterate over all days in the week
+    for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 4)):
+        # Create a nested dict for each day
+        if day.strftime("%A") == "Sunday":
+           page['tag'].append(
+            {
+                "name": day.strftime("%A"),
+                "table-ID": 3,
+                "datum": day.strftime("%d.%m"),
+            }
+            ) 
+        else:
+            page['tag'].append(
+                {
+                    "name": day.strftime("%A"),
+                    "table-ID": i + 1,
+                    "datum": day.strftime("%d.%m"),
+                }
+            )
     return page
 
 def build_monthly_overview(input_date: date) -> Dict:
@@ -108,7 +139,8 @@ while current_date <= real_end_date:
     if len(pages) == 0 or pages[-1]["month"] != get_next_sunday_date(current_date).strftime("%B"):
        pages.append(build_monthly_overview(current_date)) 
     # Add weekly page
-    pages.append(build_week_page(current_date))  
+    pages.append(build_week_page_left(current_date))  
+    pages.append(build_week_page_right(current_date + timedelta(days = 3)))  
     # Increment to the next week
     current_date += timedelta(weeks=1)
 

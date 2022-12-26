@@ -21,10 +21,10 @@
 
                 <div {% if page.type == "Overview" %}id="{{page.month}}"{% endif %} class="content-container">
 
-                    <p class="Title">{{page.month}}</p>
+                    
                     
                     {% if page.type == "Week" %}
-                    <div class="grid-container">
+                    <!-- <div class="grid-container"> -->
 
                         <!-- DaysOfTheWeek Grid -->
                         <div class="grid-container grid-item">
@@ -40,21 +40,21 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
-                                    <hr />
+                                    <!-- <hr /> -->
+                                    <!-- <hr class="Lines" />
                                     <hr class="Lines" />
                                     <hr class="Lines" />
-                                    <hr class="Lines" />
-                                    <hr class="Lines" />
+                                    <hr class="Lines" /> -->
                                 </div>
 
                             {% endfor %}
 
-                        </div>
+                        <!-- </div> -->
 
                     </div>
                     {% endif %}
                     {% if page.type == "Overview" %}
-                    
+                    <p class="Title">{{page.month}}</p>
                     <table class="MonthlyTable">
                         <tr class="DaysOfTheWeek">
                             {% for day in day_names %}
@@ -76,13 +76,13 @@
                 </div>
                 <!-- Vertical Month Bar -->
                 <div class="Strip">
-                    <p></p>
+                    <!-- <p></p>
                     <hr />
                     {% for month in month_names %}
                     <p><a href="#{{month}}">{{month[0:3]}}</a></p>
                     <hr />
                     {% endfor %}
-                    <p></p>
+                    <p></p> -->
                 </div>
 
             </div>
