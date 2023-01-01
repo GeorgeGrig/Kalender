@@ -30,7 +30,7 @@
                             {% for tag in page.tag %}
                             
                                 <div style="grid-column-start: {{tag['table-ID']}}">
-                                    <div class="Tag">
+                                    <div class="Tag-{{tag['table-ID']}}">
                                         <div>
                                             {{tag.name}}
                                         </div>
@@ -38,7 +38,7 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
-                                    <div class="Lines">
+                                    <div class="Lines-{{tag['table-ID']}}">
                                     </div>
                                     <!-- <hr /> -->
                                     <!-- <hr class="Lines" />

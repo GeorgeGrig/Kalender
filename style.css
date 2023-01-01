@@ -71,8 +71,8 @@ hr {
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    border: 1px solid rgb(0, 0, 0);
-    border-bottom: 2px solid black !important;
+    /* border: 1px solid rgb(0, 0, 0); */
+    /* border-bottom: 2px solid black !important; */
 }
 
 .grid-right {
@@ -115,12 +115,22 @@ hr {
     /* padding-bottom: 10cm; */
 }
 
-
-.Lines {
+.Lines-1 {
     padding-bottom: 29cm;
-    border-left: 1px solid rgb(0, 0, 0);
-    border-right: 1px solid rgb(0, 0, 0);
-    border-top: 1px solid black !important;
+    border-left: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
+    /* border-top: 1px solid black !important; */
+}
+.Lines-2 {
+    padding-bottom: 29cm;
+    border-right: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+.Lines-3 {
+    padding-bottom: 29cm;
+    border-right: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
 }
 
 .grid-container {
@@ -157,7 +167,32 @@ hr {
     padding: 0.27cm;
     display: flex;
     flex-direction: row;
-    border: 1px solid rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+}
+.Tag-1 {
+    /* background-color: #DBDBDB; */
+    padding: 0.27cm;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid rgb(0, 0, 0);
+}
+.Tag-2 {
+    /* background-color: #DBDBDB; */
+    padding: 0.27cm;
+    display: flex;
+    flex-direction: row;
+    border-top: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
+}
+.Tag-3 {
+    /* background-color: #DBDBDB; */
+    padding: 0.27cm;
+    display: flex;
+    flex-direction: row;
+    border-top: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
 }
 
 .Tag-Right {
