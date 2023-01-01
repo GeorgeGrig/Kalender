@@ -21,17 +21,15 @@
 
                 <div {% if page.type == "Overview" %}id="{{page.month}}"{% endif %} class="content-container">
 
-                    
-                    
-                    {% if page.type == "Week" %}
+                    {% if page.type == "Week-Left" %}
                     <!-- <div class="grid-container"> -->
 
                         <!-- DaysOfTheWeek Grid -->
-                        <div class="grid-container grid-item">
+                        <div class="grid-left">
 
                             {% for tag in page.tag %}
                             
-                                <div class="grid-item" style="grid-column-start: {{tag['table-ID']}}">
+                                <div style="grid-column-start: {{tag['table-ID']}}">
                                     <div class="Tag">
                                         <div>
                                             {{tag.name}}
@@ -39,6 +37,8 @@
                                         <div class="Links">
                                             {{tag.datum}}
                                         </div>
+                                    </div>
+                                    <div class="Lines">
                                     </div>
                                     <!-- <hr /> -->
                                     <!-- <hr class="Lines" />
@@ -49,8 +49,68 @@
 
                             {% endfor %}
 
-                        <!-- </div> -->
+                    <!-- </div> -->
+                    </div>
+                    {% endif %}
+                    {% if page.type == "Week-Right" %}
+                    <!-- <div class="grid-container"> -->
 
+                        <!-- DaysOfTheWeek Grid -->
+                        <div class="grid-right">
+
+                            {% for tag in page.tag %}
+                                {% if tag.name == "Thursday" %}
+                                <div class="div1">   
+                                    <div class="Tag">
+                                        <div>
+                                            {{tag.name}}
+                                        </div>
+                                        <div class="Links">
+                                            {{tag.datum}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if tag.name == "Friday" %}
+                                <div class="div2">   
+                                    <div class="Tag">
+                                        <div>
+                                            {{tag.name}}
+                                        </div>
+                                        <div class="Links">
+                                            {{tag.datum}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if tag.name == "Saturday" %}
+                                <div class="div3">   
+                                    <div class="Tag">
+                                        <div>
+                                            {{tag.name}}
+                                        </div>
+                                        <div class="Links">
+                                            {{tag.datum}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if tag.name == "Sunday" %}
+                                <div class="div4">   
+                                    <div class="Tag">
+                                        <div>
+                                            {{tag.name}}
+                                        </div>
+                                        <div class="Links">
+                                            {{tag.datum}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                            {% endfor %}
+
+                        <!-- </div> -->
                     </div>
                     {% endif %}
                     {% if page.type == "Overview" %}

@@ -26,7 +26,7 @@ def build_week_page_left(input_date: date) -> Dict:
     # Create page dictionary
     page = {
         "month": get_next_sunday_date(input_date).strftime("%B"),
-        "type": "Week",
+        "type": "Week-Left",
         "tag": [],
         }
     # Iterate over all days in the week
@@ -50,7 +50,7 @@ def build_week_page_right(input_date: date) -> Dict:
     # Create page dictionary
     page = {
         "month": get_next_sunday_date(input_date).strftime("%B"),
-        "type": "Week",
+        "type": "Week-Right",
         "tag": [],
         }
     # Iterate over all days in the week
