@@ -3,6 +3,9 @@
 @page {
     size: A4 portrait;
     margin: 0.2cm;
+    @bottom-right {
+        content: counter(page) " of " counter(pages);
+      }
 }
 
 @media print {
@@ -17,10 +20,10 @@ body {
     padding: 0cm;
     padding-left: 0.75cm;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14pt;
+    font-size: 18px;
     color: #3B3838;
     background: white;
-    background-image: radial-gradient(rgba(0, 0, 0, 0.6) 0.5px, transparent 0);
+    /* background-image: radial-gradient(rgba(0, 0, 0, 0.6) 0.5px, transparent 0); */
     background-size: 25px 25px;
     background-position-x: -29px;
     background-position-y: -12px;
@@ -116,19 +119,19 @@ hr {
 }
 
 .Lines-1 {
-    padding-bottom: 29cm;
+    padding-bottom: 1096px;
     border-left: 2px solid rgb(0, 0, 0);
     border-bottom: 2px solid rgb(0, 0, 0);
     border-right: 2px solid rgb(0, 0, 0);
     /* border-top: 1px solid black !important; */
 }
 .Lines-2 {
-    padding-bottom: 29cm;
+    padding-bottom: 1096px;
     border-right: 2px solid rgb(0, 0, 0);
     border-bottom: 2px solid rgb(0, 0, 0);
 }
 .Lines-3 {
-    padding-bottom: 29cm;
+    padding-bottom: 1096px;
     border-right: 2px solid rgb(0, 0, 0);
     border-bottom: 2px solid rgb(0, 0, 0);
 }

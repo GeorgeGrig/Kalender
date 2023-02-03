@@ -7,6 +7,13 @@ from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 from jinja2 import Template
 
+
+###########################
+
+#https://paper.click/en/a5-dot-grid-paper/
+
+###########################
+
 def get_next_sunday_date(input_date: date) -> date:
     """
     Returns the date of the next sunday.
@@ -74,29 +81,29 @@ def build_week_page_right(input_date: date) -> Dict:
             )
     return page
 
-def build_monthly_overview(input_date: date) -> Dict:
-    """
-    Builds the datastructure for the month overview.
-    It expects the input date to be the first day of the month.
-    """
-    weeks = []
+# def build_monthly_overview(input_date: date) -> Dict:
+#     """
+#     Builds the datastructure for the month overview.
+#     It expects the input date to be the first day of the month.
+#     """
+#     weeks = []
 
-    current_date = get_previous_monday_date(input_date)
-    first_of_the_month = date(get_next_sunday_date(input_date).year, get_next_sunday_date(input_date).month, 1)
-    real_end_date = get_next_sunday_date(first_of_the_month + relativedelta(months=1))
+#     current_date = get_previous_monday_date(input_date)
+#     first_of_the_month = date(get_next_sunday_date(input_date).year, get_next_sunday_date(input_date).month, 1)
+#     real_end_date = get_next_sunday_date(first_of_the_month + relativedelta(months=1))
 
-    while current_date <= real_end_date:
-        tag = []
-        for j in range(7):
-            tag.append(current_date.strftime("%d"))
-            current_date += timedelta(days=1)
-        weeks.append(tag)
+#     while current_date <= real_end_date:
+#         tag = []
+#         for j in range(7):
+#             tag.append(current_date.strftime("%d"))
+#             current_date += timedelta(days=1)
+#         weeks.append(tag)
 
-    return {
-            "month": get_next_sunday_date(input_date).strftime("%B"),
-            "type": "Overview",
-            "weeks": weeks,
-        }
+#     return {
+#             "month": get_next_sunday_date(input_date).strftime("%B"),
+#             "type": "Overview",
+#             "weeks": weeks,
+#         }
 
 def date_iterator(start_date: date, step: timedelta, num:int) -> Iterable[date]:
     """
@@ -107,7 +114,7 @@ def date_iterator(start_date: date, step: timedelta, num:int) -> Iterable[date]:
 parser = argparse.ArgumentParser(
     description='Renders the html for a printable calendar.', 
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--year', type=int, help='The year of the calendar.', default=datetime.now().year + 1)
+parser.add_argument('--year', type=int, help='The year of the calendar.', default=datetime.now().year ) #+ 1)
 parser.add_argument('--region', type=str, help='The region code for the calendar. Mostly used for formating dates.', default="en_GB")
 parser.add_argument('--no-browser', '-nb', action='store_true', help='Don\'t open rendered file in the default browser.')
 parser.add_argument('--output', '-o', type=str, help='Output file of the rendering containing the calendar.', default='renderedhtml.html')
@@ -134,15 +141,17 @@ current_date = get_previous_monday_date(start_date)
 
 # Create all pages of the calendar while iterating through the weeks
 pages = []
+page_number = 1
 while current_date <= real_end_date:
-    # Add monthly overview
-    if len(pages) == 0 or pages[-1]["month"] != get_next_sunday_date(current_date).strftime("%B"):
-       pages.append(build_monthly_overview(current_date)) 
+    # # Add monthly overview
+    # if len(pages) == 0 or pages[-1]["month"] != get_next_sunday_date(current_date).strftime("%B"):
+    #    pages.append(build_monthly_overview(current_date)) 
     # Add weekly page
     pages.append(build_week_page_left(current_date))  
     pages.append(build_week_page_right(current_date + timedelta(days = 3)))  
-    # Increment to the next week
+    # Increment to the next week and next page number
     current_date += timedelta(weeks=1)
+    page_number += 1
 
 # Render the dict and list structure via jinja2 and the loaded template
 outstring = tempi.render(

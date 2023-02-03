@@ -10,8 +10,8 @@
     <body>
         <div class="main-container">
             <div class="cover-container">
-                <img class="cover-img" src="img/cover_1.svg" alt="Cover art"/>
-                <p class="cover-title">{{year}}</p>
+                <img class="cover-img" src="img/COLORED perso cat_.svg" alt="Cover art"/>
+                <!-- <p class="cover-title">{{year}}</p> -->
             </div>
         </div>
 
@@ -38,7 +38,13 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
-                                    <div class="Lines-{{tag['table-ID']}}">
+                                    {% set bottompadding = 1096 %}
+                                    {% set bottompadding = bottompadding + 9 %}
+                                    <div class="Lines-{{tag['table-ID']}}"> 
+                                        <!-- style="padding-bottom: {{bottompadding}}px;"> -->
+                                    <!-- <div class="Lines-{{tag['table-ID']}}" style="padding-bottom: 1096px;"> -->
+                                        <!-- test <br>
+                                        test -->
                                     </div>
                                     <!-- <hr /> -->
                                     <!-- <hr class="Lines" />
