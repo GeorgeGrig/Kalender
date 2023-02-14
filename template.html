@@ -8,12 +8,13 @@
     </head>
 
     <body>
-        <div class="main-container">
+        <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
+        <!-- <div class="main-container">
             <div class="cover-container">
-                <img class="cover-img" src="img/COLORED perso cat_.svg" alt="Cover art"/>
-                <!-- <p class="cover-title">{{year}}</p> -->
+                <img class="cover-img" src="img/2-index-Copy.svg" alt="Cover art"/>
+                 <p class="cover-title">{{year}}</p> 
             </div>
-        </div>
+        </div> -->
 
         {% for page in pages %}
 
@@ -39,12 +40,16 @@
                                         </div>
                                     </div>
                                     {% set bottompadding = 1096 %}
-                                    {% set bottompadding = bottompadding + 9 %}
-                                    <div class="Lines-{{tag['table-ID']}}"> 
-                                        <!-- style="padding-bottom: {{bottompadding}}px;"> -->
+                                    {% set bottompadding = bottompadding - 28*tag.events_length %} 
+                                    <!-- 28px per entry, if you change font or font size you need to recalibrate, use pixel counter tool from screenshot to do that -->
+                                    
+                                    <div class="Lines-{{tag['table-ID']}}" style="padding-bottom: {{bottompadding}}px;">
                                     <!-- <div class="Lines-{{tag['table-ID']}}" style="padding-bottom: 1096px;"> -->
-                                        <!-- test <br>
-                                        test -->
+                                        {% if tag.events_length != 0 %}
+                                            {% for daily_event in tag.events %}
+                                            &nbsp;○&nbsp;{{daily_event}}<br>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                     <!-- <hr /> -->
                                     <!-- <hr class="Lines" />
@@ -65,8 +70,12 @@
                         <div class="grid-right">
 
                             {% for tag in page.tag %}
+                                {% set bottompadding = 1096 %}
+                                {% set bottompadding = bottompadding - 28*tag.events_length %}
+                                {% set bottompadding_smol = 520 %}
+                                {% set bottompadding_smol = bottompadding_smol - 28*tag.events_length %}
                                 {% if tag.name == "Thursday" %}
-                                <div class="div1">   
+                                <div class="div1" style="padding-bottom: {{bottompadding}}px;">   
                                     <div class="Tag-Right">
                                         <div>
                                             {{tag.name}}
@@ -75,10 +84,15 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
+                                    {% if tag.events_length != 0 %}
+                                        {% for daily_event in tag.events %}
+                                        &nbsp;○&nbsp;{{daily_event}}<br>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                                 {% if tag.name == "Friday" %}
-                                <div class="div2">   
+                                <div class="div2" style="padding-bottom: {{bottompadding}}px;">   
                                     <div class="Tag-Right">
                                         <div>
                                             {{tag.name}}
@@ -87,10 +101,15 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
+                                    {% if tag.events_length != 0 %}
+                                        {% for daily_event in tag.events %}
+                                        &nbsp;○&nbsp;{{daily_event}}<br>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                                 {% if tag.name == "Saturday" %}
-                                <div class="div3">   
+                                <div class="div3" style="padding-bottom: {{bottompadding_smol}}px;">   
                                     <div class="Tag-Right">
                                         <div>
                                             {{tag.name}}
@@ -99,10 +118,15 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
+                                    {% if tag.events_length != 0 %}
+                                        {% for daily_event in tag.events %}
+                                        &nbsp;○&nbsp;{{daily_event}}<br>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                                 {% if tag.name == "Sunday" %}
-                                <div class="div4">   
+                                <div class="div4" style="padding-bottom: {{bottompadding_smol}}px;">   
                                     <div class="Tag-Right">
                                         <div>
                                             {{tag.name}}
@@ -111,6 +135,11 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
+                                    {% if tag.events_length != 0 %}
+                                        {% for daily_event in tag.events %}
+                                        &nbsp;○&nbsp;{{daily_event}}<br>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                                 

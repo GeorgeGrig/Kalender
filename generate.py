@@ -6,14 +6,36 @@ from typing import Dict, Iterable
 from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 from jinja2 import Template
-
+import os
 
 ###########################
 
 #https://paper.click/en/a5-dot-grid-paper/
-
+#https://tools.pdf24.org/en/add-page-numbers-to-pdf
+#https://pixspy.com/
 ###########################
 
+
+events = {}
+def read_csv_to_dict(filename: str) -> Dict:
+    """
+    Reads a csv file and returns a dict with the first column as keys and the second column as values.
+    """
+    with open(filename) as f:
+        for line in f:
+            (key, val) = line.split(",")
+            if key in events:
+                events[key].append(val.strip())
+            else:
+                events[key] = [val.strip()]
+    return events
+
+# for every csv file in custom_events folder read the file and add the events to the events dictionary
+for filename in os.listdir("custom_events"):
+    events = read_csv_to_dict("custom_events/" + filename)
+# events = read_csv_to_dict("test_events.csv")
+# print all keys from the events dictionary as strings list
+event_dates = list(events.keys())
 def get_next_sunday_date(input_date: date) -> date:
     """
     Returns the date of the next sunday.
@@ -39,11 +61,19 @@ def build_week_page_left(input_date: date) -> Dict:
     # Iterate over all days in the week
     for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 3)):
         # Create a nested dict for each day
+        daily_events = []
+        # check if day.strftime("%d/%m") is in event_dates list
+        if day.strftime("%d/%m") in event_dates:
+            daily_events = events[day.strftime("%d/%m")]
+            # print(daily_events)
+
         page['tag'].append(
             {
                 "name": day.strftime("%A"),
                 "table-ID": i + 1,
                 "datum": day.strftime("%d.%m"),
+                "events": daily_events,
+                "events_length": len(daily_events)
             }
         )
     # # Append blank "day" for notes to get to an even number on the page
@@ -60,8 +90,13 @@ def build_week_page_right(input_date: date) -> Dict:
         "type": "Week-Right",
         "tag": [],
         }
+        # print(daily_events)
     # Iterate over all days in the week
     for i, day in enumerate(date_iterator(input_date, timedelta(days=1), 4)):
+        daily_events = []
+        # check if day.strftime("%d/%m") is in event_dates list
+        if day.strftime("%d/%m") in event_dates:
+            daily_events = events[day.strftime("%d/%m")]
         # Create a nested dict for each day
         if day.strftime("%A") == "Sunday":
            page['tag'].append(
@@ -69,6 +104,8 @@ def build_week_page_right(input_date: date) -> Dict:
                 "name": day.strftime("%A"),
                 "table-ID": 3,
                 "datum": day.strftime("%d.%m"),
+                "events": daily_events,
+                "events_length": len(daily_events)
             }
             ) 
         else:
@@ -77,6 +114,8 @@ def build_week_page_right(input_date: date) -> Dict:
                     "name": day.strftime("%A"),
                     "table-ID": i + 1,
                     "datum": day.strftime("%d.%m"),
+                    "events": daily_events,
+                    "events_length": len(daily_events)
                 }
             )
     return page
@@ -114,7 +153,7 @@ def date_iterator(start_date: date, step: timedelta, num:int) -> Iterable[date]:
 parser = argparse.ArgumentParser(
     description='Renders the html for a printable calendar.', 
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--year', type=int, help='The year of the calendar.', default=datetime.now().year ) #+ 1)
+parser.add_argument('--year', type=int, help='The year of the calendar.', default=datetime.now().year ) #+ 1) ###################################### THIS IS THE CURRENT YEAR ADD ONE TO GET NEXT YEAR
 parser.add_argument('--region', type=str, help='The region code for the calendar. Mostly used for formating dates.', default="en_GB")
 parser.add_argument('--no-browser', '-nb', action='store_true', help='Don\'t open rendered file in the default browser.')
 parser.add_argument('--output', '-o', type=str, help='Output file of the rendering containing the calendar.', default='renderedhtml.html')
