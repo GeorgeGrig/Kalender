@@ -8,14 +8,16 @@
     </head>
 
     <body>
+        <!-- index -->
+        <img class="cover-img" src={{structure.logo_file}} alt="Cover art"/>
+        {% for n in range(structure.num_bullet_pages_before) %}
+        <div class="main-container">
         <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
-        <!-- <div class="main-container">
-            <div class="cover-container">
-                <img class="cover-img" src="img/2-index-Copy.svg" alt="Cover art"/>
-                 <p class="cover-title">{{year}}</p> 
-            </div>
-        </div> -->
-
+        </div>
+        {% endfor %}
+        <div class="main-container">
+        <img class="cover-img" src={{structure.first_art_file}} alt="Cover art"/>
+        </div>
         {% for page in pages %}
 
             <div class="main-container">
@@ -39,7 +41,8 @@
                                             {{tag.datum}}
                                         </div>
                                     </div>
-                                    {% set bottompadding = 1096 %}
+                                    <!-- {% set bottompadding = 1096 %} -->
+                                    {% set bottompadding = 1054 %}
                                     {% set bottompadding = bottompadding - 28*tag.events_length %} 
                                     <!-- 28px per entry, if you change font or font size you need to recalibrate, use pixel counter tool from screenshot to do that -->
                                     
@@ -51,28 +54,20 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-                                    <!-- <hr /> -->
-                                    <!-- <hr class="Lines" />
-                                    <hr class="Lines" />
-                                    <hr class="Lines" />
-                                    <hr class="Lines" /> -->
                                 </div>
 
                             {% endfor %}
-
-                    <!-- </div> -->
                     </div>
                     {% endif %}
                     {% if page.type == "Week-Right" %}
-                    <!-- <div class="grid-container"> -->
 
                         <!-- DaysOfTheWeek Grid -->
                         <div class="grid-right">
 
                             {% for tag in page.tag %}
-                                {% set bottompadding = 1096 %}
+                                {% set bottompadding = 1054 %}
                                 {% set bottompadding = bottompadding - 28*tag.events_length %}
-                                {% set bottompadding_smol = 520 %}
+                                {% set bottompadding_smol = 499 %}
                                 {% set bottompadding_smol = bottompadding_smol - 28*tag.events_length %}
                                 {% if tag.name == "Thursday" %}
                                 <div class="div1" style="padding-bottom: {{bottompadding}}px;">   
@@ -169,19 +164,38 @@
 
                     {% endif %}
                 </div>
-                <!-- Vertical Month Bar -->
-                <div class="Strip">
-                    <!-- <p></p>
-                    <hr />
-                    {% for month in month_names %}
-                    <p><a href="#{{month}}">{{month[0:3]}}</a></p>
-                    <hr />
-                    {% endfor %}
-                    <p></p> -->
-                </div>
-
             </div>
     
+        {% endfor %}
+    
+        {% for n in range(structure.num_bullet_pages_after) %}
+        <div class="main-container">
+        <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
+        </div>
+        {% endfor %}
+        <div class="main-container">
+        <img class="cover-img" src={{structure.second_art_file}} alt="Cover art"/>
+        </div>
+        {% for n in range(structure.num_bullet_pages_after_2) %}
+        <div class="main-container">
+        <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
+        </div>
+        {% endfor %}
+        <div class="main-container">
+        <img class="cover-img" src={{structure.third_art_file}} alt="Cover art"/>
+        </div>
+        {% for n in range(structure.num_bullet_pages_after_3) %}
+        <div class="main-container">
+        <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
+        </div>
+        {% endfor %}
+        <div class="main-container">
+        <img class="cover-img" src={{structure.fourth_art_file}} alt="Cover art"/>
+        </div>
+        {% for n in range(structure.num_bullet_pages_after_4) %}
+        <div class="main-container">
+        <img class="cover-img" src="img/bullet_page.svg" alt="Cover art"/>
+        </div>
         {% endfor %}
 
     </body>

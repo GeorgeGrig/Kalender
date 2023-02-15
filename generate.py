@@ -12,9 +12,27 @@ import os
 
 #https://paper.click/en/a5-dot-grid-paper/
 #https://tools.pdf24.org/en/add-page-numbers-to-pdf
+#https://www.ilovepdf.com/add_pdf_page_number facing pages, first page cover, font 10, recommended margin
 #https://pixspy.com/
 ###########################
 
+#Read a pdf file and add page numbers to it using python pyPDF2
+#https://www.geeksforgeeks.org/read-a-pdf-file-and-add-page-numbers-to-it-using-python-pypdf2/
+
+### Structure ###
+structure = {
+    "target_year": datetime.now().year,
+    "logo_file": "img/logo.svg",
+    "num_bullet_pages_before": 3,
+    "first_art_file": "img/colored_oni_mask.svg",
+    "num_bullet_pages_after": 11,
+    "second_art_file": "img/colored_dice.svg",
+    "num_bullet_pages_after_2": 3,
+    "third_art_file": "img/ninja.svg",
+    "num_bullet_pages_after_3": 3,
+    "fourth_art_file": "img/colored_perso_cat.svg",
+    "num_bullet_pages_after_4": 64,
+}
 
 events = {}
 def read_csv_to_dict(filename: str) -> Dict:
@@ -120,30 +138,6 @@ def build_week_page_right(input_date: date) -> Dict:
             )
     return page
 
-# def build_monthly_overview(input_date: date) -> Dict:
-#     """
-#     Builds the datastructure for the month overview.
-#     It expects the input date to be the first day of the month.
-#     """
-#     weeks = []
-
-#     current_date = get_previous_monday_date(input_date)
-#     first_of_the_month = date(get_next_sunday_date(input_date).year, get_next_sunday_date(input_date).month, 1)
-#     real_end_date = get_next_sunday_date(first_of_the_month + relativedelta(months=1))
-
-#     while current_date <= real_end_date:
-#         tag = []
-#         for j in range(7):
-#             tag.append(current_date.strftime("%d"))
-#             current_date += timedelta(days=1)
-#         weeks.append(tag)
-
-#     return {
-#             "month": get_next_sunday_date(input_date).strftime("%B"),
-#             "type": "Overview",
-#             "weeks": weeks,
-#         }
-
 def date_iterator(start_date: date, step: timedelta, num:int) -> Iterable[date]:
     """
     Iterates a timedelta n times beginning at the given date.
@@ -194,6 +188,7 @@ while current_date <= real_end_date:
 
 # Render the dict and list structure via jinja2 and the loaded template
 outstring = tempi.render(
+    structure = structure,
     pages = pages,
     day_names = list(calendar.day_name),
     month_names = list(calendar.month_name)[1:],

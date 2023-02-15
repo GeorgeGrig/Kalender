@@ -11,7 +11,7 @@
 @media print {
     body {
         width: 21cm;
-        height: 30.7cm;
+        height: 29.7cm;
     }
     .main-container {
         padding-left: 0 !important;
@@ -64,7 +64,7 @@ hr {
 
 .main-container {
     display: flex;
-    height: 30.7cm;
+    height: 29.7cm;
     page-break-after: always;
 }
 
@@ -225,7 +225,7 @@ hr {
 .Strip {
     /* width: 10cm; */
     float: right;
-    margin-left: 0.75cm;
+    /* margin-left: 0.75cm; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
